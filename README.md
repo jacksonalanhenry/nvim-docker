@@ -38,11 +38,11 @@ This will mount the local directory into the container, making it accessible to 
 The `open-nvim.sh` script simplifies running Neovim in a Docker container with custom directory mounts. This script allows you to mount specific directories or files into the container without manually typing the docker run command.
 
 ## Script Features
-- Environment Variable for Default Mounts: The script uses the `NVIM_DOCKER_MOUNTS` environment variable to automatically mount specific directories whenever Neovim is launched via Docker.
+- The script uses the `NVIM_DOCKER_MOUNTS` environment variable to automatically mount a default set of specific directories whenever Neovim is launched via Docker. This environment varilable is a colon separated list of paths. 
 
-- Passing Custom Paths as Arguments: You can also pass directories or files as arguments to the script, and these will be mounted in the Docker container under the same paths.
+- Passing Custom Paths as Arguments: You can also pass directories as arguments to the script, and these will be mounted in the Docker container under the same path as the host.
 
-- If the `NVIM_DOCKER_MOUNTS` environment variable *is not* set, the script will print a warning but continue running. You can still provide directories or files as arguments, and they will be mounted.
+- If the `NVIM_DOCKER_MOUNTS` environment variable *is not* set, the script will print a warning and continue running. You can still provide directories as arguments, and they will be mounted.
 
 ### Example Usage
 
