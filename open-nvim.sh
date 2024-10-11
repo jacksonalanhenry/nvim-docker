@@ -29,4 +29,5 @@ if [ "$#" -gt 0 ]; then
 fi
 
 # Run the Neovim Docker container with the mounted volumes
+echo "Running: docker run -it $VOLUME_ARGS nvim-docker"
 docker run -it $VOLUME_ARGS nvim-docker
