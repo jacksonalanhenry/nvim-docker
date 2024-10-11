@@ -42,7 +42,7 @@ RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appi
     rm nvim.appimage
 
 # Clone the kickstart.nvim repository into the Neovim configuration folder
-RUN git clone https://github.com/nvim-lua/kickstart.nvim.git /root/.config/nvim
+RUN git clone --single-branch --branch personal-config https://github.com/jacksonalanhenry/kickstart.nvim.git /root/.config/nvim
 
 # Install Neovim plugins and configurations
 RUN nvim --headless +PackerSync +qa
