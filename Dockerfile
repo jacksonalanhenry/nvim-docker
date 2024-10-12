@@ -16,6 +16,8 @@ ARG NO_CONFIG=false
 RUN apt-get update && \
     apt-get install -y \
     curl \
+    wget \
+    locales \
     software-properties-common \
     git \
     build-essential \
@@ -32,8 +34,21 @@ RUN apt-get update && \
     python3-venv \
     nodejs \
     npm \
+    ripgrep \
+    fd-find \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Set the locale
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8
+
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+
 
 # Download and install the latest stable version of Neovim
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
