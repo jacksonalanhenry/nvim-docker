@@ -9,6 +9,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Neovim root directory during the build process. If not provided, the 
 # default will be /home.
 ARG NVIM_ROOT_DIR=/home
+ARG NVIM_CONFIG_PATH=""
+ARG NO_CONFIG=false
 
 # Install dependencies
 RUN apt-get update && \
@@ -41,8 +43,8 @@ RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appi
     ln -s /root/nvim-squashfs-root/AppRun /usr/bin/nvim && \
     rm nvim.appimage
 
-# Clone the kickstart.nvim repository into the Neovim configuration folder
-RUN git clone https://github.com/nvim-lua/kickstart.nvim.git /root/.config/nvim
+# Copy the local Neovim configuration if provided and NO_CONFIG is false
+COPY ${NVIM_CONFIG_PATH} /root/.config/nvim
 
 # Install Neovim plugins and configurations
 RUN nvim --headless +PackerSync +qa
