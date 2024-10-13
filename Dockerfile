@@ -63,6 +63,8 @@ COPY ${NVIM_CONFIG_PATH} /root/.config/nvim
 
 # Install Neovim plugins and configurations
 RUN nvim --headless +PackerSync +qa
+RUN nvim --headless +"Lazy! sync" +qa
+RUN nvim --headless +"Lazy! install" +qa
 
 # Set the working directory to the user-defined path or default to /home
 WORKDIR ${NVIM_ROOT_DIR}
