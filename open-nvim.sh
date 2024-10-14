@@ -13,21 +13,21 @@ get_abs_path() {
   echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 }
 
-# Process additional paths passed as arguments
 if [ "$#" -gt 0 ]; then
-  for path in "$@"; do
+  for arg in "$@"; do
     # Convert the path to absolute path
-    abs_path=$(get_abs_path "$path")
-    
+    abs_path=$(get_abs_path "$arg")
     if [ -d "$abs_path" ]; then
-      # Mount to the same location inside the container
       VOLUME_ARGS="$VOLUME_ARGS -v $abs_path:$abs_path"
+    elif [ -f "$abs_path" ]; then
+      VOLUME_ARGS="$VOLUME_ARGS -v $abs_path:$abs_path"
+      FILES="$FILES $abs_path"
     else
-      echo "Warning: $path is not a valid directory. Skipping."
+      echo "Warning: $arg is not a valid file or directory. Skipping."
     fi
   done
 fi
 
 # Run the Neovim Docker container with the mounted volumes
-echo "Running: docker run -it $VOLUME_ARGS nvim-docker"
-docker run --rm -it $VOLUME_ARGS nvim-docker
+echo "Running: docker run --rm -it $VOLUME_ARGS nvim-docker $FILES"
+docker run --rm -it $VOLUME_ARGS nvim-docker $FILES
